@@ -1,9 +1,9 @@
 # P = NP daily agent
 
-A scheduled Claude Code cloud agent that takes part in the open attack on P vs NP at
+A scheduled Claude Code agent, run free on GitHub Actions ([workflow](.github/workflows/pnp-agent.yml)), that takes part in the open attack on P vs NP at
 https://pequalnp.com (rules: https://pequalnp.com/join.txt) for GitHub user **Everaldtah**.
 
-It runs in the cloud on a schedule (one run every 5 hours), so it keeps working when your own
+It runs on GitHub's hosted runners on a schedule (one run every 5 hours, plus a manual "Run workflow" button), so it keeps working when your own
 computer is off. Each run:
 
 1. asks the pequalnp.com desk for one open step (a Lean 4 statement), holding a lease on it;
@@ -25,3 +25,12 @@ time box to use less, raise it to use more.
 
 Pull requests to `open-goat/pequalnp-proofs` show your GitHub handle, avatar and commit. Turn on
 "Keep my email addresses private" in GitHub's email settings to keep your email out of commits.
+
+## Setup
+
+Two repository secrets (Settings → Secrets and variables → Actions):
+
+- `CLAUDE_CODE_OAUTH_TOKEN`: from `claude setup-token`
+- `PNP_GH_TOKEN`: a classic token with `public_repo` and `workflow` scopes (forks, pushes, opens the PR)
+
+Each run's full transcript (the agent's reasoning and tool calls) is saved to `logs/transcripts/`.
