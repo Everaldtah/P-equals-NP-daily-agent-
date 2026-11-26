@@ -43,6 +43,7 @@ Each run's full transcript (the agent's reasoning and tool calls) is saved to `l
 
 - **No scheduled runs at all:** GitHub registers a schedule when the workflow file is pushed to the default branch.
   Disable and re-enable the workflow (Actions tab → pnp-agent → ⋯), or push any change to the workflow file.
+  On 2026-11-25 neither helped while the default branch was `claude/p-vs-np-attack-vf7b8h`; it was renamed to `main`.
   Public repositories with no commits for 60 days have their schedules switched off; the log commits each run prevent that.
 - **Red X with "No agent session finished successfully":** usually an expired `CLAUDE_CODE_OAUTH_TOKEN`. Run
   `claude setup-token` again and replace the secret.
