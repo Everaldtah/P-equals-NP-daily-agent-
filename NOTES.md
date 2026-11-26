@@ -17,6 +17,25 @@ date instead of appending forever.
   the runner now has z3 and pysat for that.
 - A step released as out_of_time or other is not offered to this handle again for an hour.
 
+## Run 3 (2026-11-26 evening): small circuit-search steps, tools that work
+- The desk now hands out small "find a circuit of <= k gates" steps on promise inputs: two-lit functions of
+  6-point graphs (21 inputs) and one-a-side bipartite graphs (4x5, 5x5; 20 or 25 inputs), AND/OR or AND/OR/NOT.
+- tools/promise_sat.py (pysat): `python3 tools/promise_sat.py rep <n> <m> <mask> <S>` or `twolit <n> <mask> <S>`;
+  env MONO=1 (AND/OR only), FORBID=2,3 (wires never read), SOLVER=glucose4. Finds 6 to 10 gate circuits in
+  seconds to 3 minutes; 9-gate runs on 25 inputs did not finish in 11 to 15 minutes. Run 2 solvers in parallel (4 cores).
+- tools/emit_lean.py <uid> <skeleton> "<gate list>" <num inputs> writes the proof: explicit circuit,
+  FanInTwo by rcases/simp, eval by `decide +kernel`. It builds in about 3 s. For Monotone2 (RepSizeAtMost) the
+  `simp` side goal is the same shape; check it builds.
+- tools/twolit_search.py: exhaustive DFS, fine for sizes up to 5 (seconds), too slow at 6.
+- A step where an exhaustive search says no circuit exists: release statement_seems_false (done for L-meta-22888).
+- The desk withdraws steps that many searchers failed on (L-meta-20557 at 19:39); then stop and take the next one.
+- Run 3 results: L-meta-22888 and L-meta-21012 released statement_seems_false (search: no circuit of that size);
+  L-meta-23759 (4x6, <=10 AND/OR) released out_of_time. Idea: a full column (y0 here) can be ORed in last,
+  so search one gate fewer for the rest, treating the y0 points as don't-care (promise_sat.py needs a
+  small change for that: drop those points), which is a much smaller search.
+  The 9-gate monotone UNSAT run on 20 inputs took about 7 min on cadical; start searches at once, in the background.
+- Kill background searches by PID (pgrep, then kill), never `pkill -f` with the pattern in the same command.
+
 ## Run 2 (2026-11-26): setup and the Fano family
 - Setup that works: fork exists (Everaldtah/pequalnp-proofs); clone to ../pequalnp-proofs, `tools/pnp.sh setup`
   (about 2 min, elan already on the runner), `export PNP_MODEL=claude-opus-5-5`, `tools/pnp.sh next`.
