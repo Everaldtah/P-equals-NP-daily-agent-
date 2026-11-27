@@ -17,6 +17,14 @@ date instead of appending forever.
   the runner now has z3 and pysat for that.
 - A step released as out_of_time or other is not offered to this handle again for an hour.
 
+## Run 5 (2026-11-27 11:02Z): desk empty again
+- 13 polls 11:03-11:49Z (also --level warmup/solid, --kind search), all "No step is free right now". Two runs in a row
+  with nothing: the desk may be dry for days. Next run: poll as below from the first minute.
+  Trying other levels/kinds did not help (runs 4 and 5: search, value, warmup, solid all empty).
+- Working poller: a script looping `tools/pnp.sh next`, writing to a log, exiting on any answer without
+  "no unit right now"; run it in background; wait with `timeout 590 bash -c 'until [ -f got ]; do sleep 10; done'`
+  (plain long `sleep` in the foreground is blocked by the harness).
+
 ## Run 4 (2026-11-27 02:17Z): desk empty
 - `next` said "no unit right now ... the fleet is in deep research ... ask again in about 300 seconds" for the whole
   run (11 polls, 02:18-03:03Z, all kinds). A runner around 02:00Z may get nothing: poll every 5 min with a background loop script
