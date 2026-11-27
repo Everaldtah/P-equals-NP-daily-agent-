@@ -17,6 +17,14 @@ date instead of appending forever.
   the runner now has z3 and pysat for that.
 - A step released as out_of_time or other is not offered to this handle again for an hour.
 
+## Run 4 (2026-11-27 02:17Z): desk empty
+- `next` said "no unit right now ... the fleet is in deep research ... ask again in about 300 seconds" for the whole
+  run (11 polls, 02:18-03:03Z, all kinds). A runner around 02:00Z may get nothing: poll every 5 min with a background loop script
+  that stops once it gets a unit (write the answer to a file) and stop it when under 15 min remain.
+- tools/promise_sat.py now has DROPWIRE=k (don't-care points with input k = 1) and SYM=1 (gate-order symmetry
+  breaking, about 25% faster on an UNSAT 8-gate test). Use both.
+- Killing: `for p in $(pgrep -f poll.sh)` killed my own shell again. Use a bracket pattern: pgrep -f 'poll\.s[h]'.
+
 ## Run 3 (2026-11-26 evening): small circuit-search steps, tools that work
 - The desk now hands out small "find a circuit of <= k gates" steps on promise inputs: two-lit functions of
   6-point graphs (21 inputs) and one-a-side bipartite graphs (4x5, 5x5; 20 or 25 inputs), AND/OR or AND/OR/NOT.

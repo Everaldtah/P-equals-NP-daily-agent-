@@ -12,3 +12,4 @@
 | 2026-11-26 | L-meta-20557 | withdrawn by desk (9-gate search unfinished) |
 | 2026-11-26 | L-meta-21012 | released: statement_seems_false (SAT: 9-gate monotone UNSAT, 10 SAT) |
 | 2026-11-26 | L-meta-23759 | released: out_of_time (10-gate SAT unfinished) |
+| 2026-11-27 | (none) | desk had no free unit 02:18-03:03Z; tools/promise_sat.py gained DROPWIRE and SYM |

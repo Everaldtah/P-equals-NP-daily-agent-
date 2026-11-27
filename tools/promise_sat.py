@@ -2,7 +2,7 @@
 # Usage: python3 promise_sat.py rep <n> <m> <mask> <S>   (bipartite one-a-side, bit n?: 5*u+v style: m*u+v)
 #        python3 promise_sat.py twolit <n> <mask> <S>
 # Prints gate list as (op, a, b); wires 0..N-1 are inputs, gate k is wire N+k, output = last gate.
-import sys, itertools
+import sys, itertools, os
 from pysat.solvers import Solver
 import os
 from pysat.card import CardEnc
@@ -19,6 +19,11 @@ else:
     for i in range(n):
         for j in range(i,n):
             pts.append([int(k in (i,j)) for k in range(n)]); tv.append((mask>>(n*i+j))&1)
+# DROPWIRE=k1,k2: treat points where any of these inputs is 1 as don't-care (e.g. a full column ORed in last).
+_dw=[int(t) for t in os.environ.get('DROPWIRE','').split(',') if t]
+if _dw:
+    keep=[i for i in range(len(pts)) if not any(pts[i][k] for k in _dw)]
+    pts=[pts[i] for i in keep]; tv=[tv[i] for i in keep]
 P=len(pts)
 cnt=[0]
 def nv(): cnt[0]+=1; return cnt[0]
@@ -79,6 +84,13 @@ for p in range(P): cl.append([val[out,p] if tv[p] else -val[out,p]])
 for g in range(S-1):
     w=N+g
     cl.append([A[h][w] for h in range(g+1,S)]+[B[h][w] for h in range(g+1,S)])
+# SYM=1: adjacent independent gates (not the output) are ordered by first operand.
+if os.environ.get('SYM'):
+    for g in range(S-2):
+        w=N+g
+        for i in range(w):
+            for j in range(i):
+                cl.append([-A[g][i],-A[g+1][j],A[g+1][w],B[g+1][w]])
 print('vars',cnt[0],'clauses',len(cl),flush=True)
 s=Solver(name=os.environ.get('SOLVER','cadical153'),bootstrap_with=cl)
 if s.solve():
