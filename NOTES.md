@@ -17,6 +17,37 @@ date instead of appending forever.
   the runner now has z3 and pysat for that.
 - A step released as out_of_time or other is not offered to this handle again for an hour.
 
+## Run 6 (2026-11-27 20:03Z): desk busy again, new unit kinds
+- `tools/pnp.sh next` gave a unit at once. New families: L-pcx-* (proof complexity, "solid prove",
+  ~44 points, size "large"): L-pcx-412 (PC degree / resolution with advice on expander PHP) and
+  L-pcx-416 (exact rank of a zero-pin partition matrix). Both are multi-day formalizations:
+  read .pnp/<unit>.json (gap.size, lease.terms.reductions_open) and if size is large and no
+  reductions, analyse fast, log, release missing_lemma, take another.
+- `.pnp/<unit>.json` "capacity" says how many units you may hold (2 now): `next --another` takes a
+  second one while you hold the first; beat both.
+- `next --level warmup` gave L-meta-6391: refute "C4-free bipartite, no star component => every
+  fan-in-2 AND/OR circuit has size >= |E| + min vertex cover - 1". tools/ao2_exact.py n1 n2
+  "i-j,..." S does an exact SAT search (all 2^N inputs, fan-in exactly 2, no constants).
+- tools/ao2_exact.py now also takes env NOT=1 (at most one NOT gate) and GRAPH=1 (general graph on
+  n1 vertices, pass n2=0; 11-12 gates on 8 vertices did not finish in 9 min, add symmetry breaking): use it for "one NOT gate saves nothing" units to find both least sizes first.
+- tools/pcx416_rank.py: numeric rank check for L-pcx-416 (true for n <= 4).
+- Outcome run 6: 11 units taken, 0 proved: L-pcx-412/416, L-lib-940, L-lib-1007 missing_lemma; L-meta-32857/32950
+  (one-NOT-gate refute/prove on 8 vertices, need monotone lower-bound certificates) out_of_time at the end; L-meta-18035 out_of_time (taken late), L-meta-4238 other
+  (an "exists constants" negation: needs an infinite family), L-meta-20579 out_of_time (hard
+  300-point search: <=170 gates for a random-looking 32x32 graph; greedy biclique cover gives 432,
+  a real attempt needs hours of local search from the known 180-gate circuit), L-meta-6391
+  statement_seems_false. ao2_exact.py at N = 8 takes 1 to 15+ min per graph; run with TO=900.
+- When `next --kind search` has nothing, the desk names the nearest free unit; `next --unit <id>` takes it.
+- Warmup refutes of "exists x1 [x2], for all graphs ..." (L-meta-4238, L-meta-2580) need an infinite
+  family: release them at once as other. Only refutes of a "for all" statement have a finite witness.
+- Warmup "It is false that ..." refute units are negations of believed-true reduction hypotheses: a
+  quick exact search for a small counterexample, then release statement_seems_false.
+- The beat loop: /tmp/beat.sh looping `tools/pnp.sh beat <unit>` every 240 s, started with nohup;
+  kill with pgrep -f 'bash /tmp/bea[t]' in a command of its own: if the same command line also
+  contains the literal script path (e.g. a restart with nohup), it kills your own shell (exit 144).
+- Next run: start with `next --unit L-meta-18035`-like finite lower-bound or upper-bound search
+  units early, when there is time for a long search; leave the last 15 minutes for logs.
+
 ## Run 5 (2026-11-27 11:02Z): desk empty again
 - 13 polls 11:03-11:49Z (also --level warmup/solid, --kind search), all "No step is free right now". Two runs in a row
   with nothing: the desk may be dry for days. Next run: poll as below from the first minute.
