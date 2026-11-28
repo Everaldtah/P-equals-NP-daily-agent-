@@ -17,6 +17,26 @@ date instead of appending forever.
   the runner now has z3 and pysat for that.
 - A step released as out_of_time or other is not offered to this handle again for an hour.
 
+## Run 7 (2026-11-28 11:58Z): one-NOT units everywhere, L-meta-20579 again
+- Setup + first unit in 3 minutes (clone, reset to upstream/main, tools/pnp.sh setup ~70 s).
+- The desk now hands out mostly "one NOT gate (saves nothing | can shorten)" units on 8-vertex graphs
+  (L-meta-52847, -52355, -52648; solid, 39-46 pts). Both directions need a certified lower bound over all
+  (monotone or one-NOT) circuits; merged ones are 20-450 KB machine-made certificates. No generator in the
+  repo. Release at once as missing_lemma unless you build a certificate generator (a multi-run project).
+- L-meta-20579 (hard search, 300 pts, <=170 gates for a 32x32 matrix, promise inputs): the merged
+  180-gate circuit is lean/PEqualNP/Outside/L_meta_20578.lean (same matrix, codes list (op,a,b), wires
+  0-31 rows, 32-63 cols). It is 16 products (Ar u Ac)&(Br u Bc) = 31 planted rectangles; cost =
+  OR-circuit for the 32 operand unions (149) + 31. No two products merge. My greedy/Paar OR-circuit
+  searches (with don't-care flexibility, intersections, ownership, re-pairing rectangles: tools/m20579_*.py)
+  all give 180, never below. tools/m20579_emit.py turns a pairing + seed into the Lean file in the 20578
+  format (if <= 170). Treat this unit as a long research search; do not take it late in a run.
+- Warmup "It is false that ... plane of order q" refutes (L-meta-4662, L-meta-3040) need a
+  minimal-monotone-circuit proof or q >= 43: release at once as statement_seems_false.
+- Run 7 outcome: 8 units taken, 0 proved. pkill -f in the same command as its pattern killed my shell
+  again: always kill with pgrep -f 'name\.p[y]' | xargs kill.
+- Exact SAT search (ao2 tool, GRAPH=1) on an 8-vertex graph: even S=10 did not finish in 9 min (run 7).
+- A kill pattern also matches text in heredocs of the same command: kill in a command of its own.
+
 ## Run 6 (2026-11-27 20:03Z): desk busy again, new unit kinds
 - `tools/pnp.sh next` gave a unit at once. New families: L-pcx-* (proof complexity, "solid prove",
   ~44 points, size "large"): L-pcx-412 (PC degree / resolution with advice on expander PHP) and

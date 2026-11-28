@@ -25,3 +25,11 @@
 | 2026-11-27 | L-lib-1007 | released: missing_lemma (large F2 linear-algebra coding lemma, taken at end of run) |
 | 2026-11-27 | L-meta-32857 | released: out_of_time (one-NOT refute needs a monotone lower-bound certificate; taken at end of run) |
 | 2026-11-27 | L-meta-32950 | released: out_of_time (one-NOT-saves-nothing lower bound, taken at end of run) |
+| 2026-11-28 | L-meta-52847 | released: missing_lemma (one-NOT refute on 8 vertices needs a monotone lower-bound certificate) |
+| 2026-11-28 | L-meta-52355 | released: missing_lemma (same family, 16 edges) |
+| 2026-11-28 | L-meta-4662 | released: statement_seems_false (projective-plane hypothesis negation, needs q >= 43) |
+| 2026-11-28 | L-meta-52648 | released: missing_lemma (one-NOT-saves-nothing prove, needs a lower-bound certificate) |
+| 2026-11-28 | L-meta-3040 | released: statement_seems_false (plane hypothesis negation; counterexample needs a minimal-circuit proof) |
+| 2026-11-28 | L-meta-20579 | released: out_of_time (34 min; all union-sharing searches stop at the known 180 gates, target 170) |
+| 2026-11-28 | L-meta-51971 | released: missing_lemma (one-NOT refute, 17 edges, taken at 12:36Z) |
+| 2026-11-28 | L-meta-53101 | released: missing_lemma (one-NOT refute, 21 edges; monotone SAT at 10-12 gates unfinished in 9 min) |
